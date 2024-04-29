@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax search param</title>
+</head>
+<body>
+    <form action="">
+        <label for="search">
+            username : 
+        <input type="text" name="search" id="search">
+        </label>
+        <br>
+        <input type="button" value="search" id="searchbtn">
+    </form>
+
+    <h1 id="response"></h1>
+    <script>
+        function dosearch(){
+            const ajax = new XMLHttpRequest();
+
+            const param = new URLSearchParams();
+            param.append("search",document.getElementById("search").value);
+            param.append("filter", document.getElementById("search").value);;
+
+            ajax.open("GET",`https://testerserver1.free.beeceptor.com?${param.toString()}`);
+            ajax.onload = function(){
+                const response = document.getElementById("response");
+                response.innerText = ajax.responseText;
+             }
+             
+             ajax.send();
+         }   
+         
+         document.getElementById("searchbtn").onclick = dosearch;
+
+        
+    </script>
+</body>
+</html>

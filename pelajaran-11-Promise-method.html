@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Method</title>
+</head>
+<body>
+
+    <table>
+        <tbody>
+            <tr>
+                <td>ID : </td>
+                <td id="id"></td>
+            </tr>
+            <tr>
+                <td>Name :</td>
+                <td id="name"></td>
+            </tr>
+            <tr>
+                <td>Price :</td>
+                <td id="price"></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+
+        // //promise
+            function getProduct(product){
+                return new Promise(function(resolve,reject){
+                    const ajax = new XMLHttpRequest();
+                    ajax.open("GET", `api/${product}.json`);
+
+                    ajax.onload = function() {
+                        if(ajax.status === 200){
+                            resolve(ajax.responseText);
+                        }else{
+                            reject(`Error Get Product With Response ${ajax.responseText}`);
+                        }
+                    }
+                    ajax.send();
+                });
+            }
+
+            getProduct("product")
+                .then(function(response){
+                    return JSON.parse(response);
+                })
+                .then(function (json){
+                    document.getElementById("id").textContent = json.id;
+                    document.getElementById("name").textContent = json.name;
+                    document.getElementById("price").textContent = json.price;
+                })
+
+                .catch(function(error){
+                    ocument.getElementById("id").textContent = error;
+                    document.getElementById("name").textContent = error;
+                    document.getElementById("price").textContent = error;
+                })
+
+                .finally(function(){
+                    console.info("finally");
+                })
+
+            const response = Promise.all([
+                getProduct("product1"),
+                getProduct("product2"),
+                getProduct("product3")
+            ])
+
+            const response2 = Promise.any([
+                getProduct("product1"),
+                getProduct("product2"),
+                getProduct("product3")
+            ])
+
+            const response3 = Promise.race([
+                getProduct("product1"),
+                getProduct("product2"),
+                getProduct("product3")
+            ])
+
+            response
+                .then((values) => console.info(values))
+                .catch((error) => console.error(error))
+            
+            response2
+                .then((values) => console.info(values))
+                .catch((error) => console.error(error))
+
+            response3
+                .then((values) => console.info(values))
+                .catch((error) => console.error(error))
+    </script>
+</body>
+</html>

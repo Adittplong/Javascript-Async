@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+</head>
+<body>
+
+
+    <script>
+
+        // //promise
+            const promise = new Promise(function(resolve,reject){
+                const ajax = new XMLHttpRequest();
+                ajax.open("GET", "api/product.json");
+
+                ajax.onload = function() {
+                    if(ajax.status == 200){
+                        resolve(JSON.parse(ajax.responseText));
+                    }else{
+                        reject(`Error Get Product With Response ${ajax.responseText}`);
+                    }
+                }
+                ajax.send();
+            });
+
+            console.info(promise);
+    </script>
+</body>
+</html>

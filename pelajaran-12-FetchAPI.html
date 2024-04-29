@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API</title>
+</head>
+<body>
+    <form action="">
+        <label for="username">
+            username : 
+        <input type="text" name="username" id="username">
+        </label>
+        <br>
+        <label for="password">
+            Password :
+            <input type="password" name="password" id="password">
+        </label>
+        <br>
+        <input type="button" value="Login" id="login">
+    </form>
+
+    <h1 id="response"></h1>
+
+    <script>
+        function doLogin(){
+            const request = new Request("https://testerserver1.free.beeceptor.com", {
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json",
+                    "Accept" : "application/json"
+                },
+                body : JSON.stringify({
+                    username : document.getElementById("username").value,
+                    password : document.getElementById("password").value
+                })
+            });
+            const response = fetch(request);
+            response
+                .then((response) => response.json())
+                .then(function(json){
+                    document.getElementById("response").textContent = json.success
+                })
+                .catch(function(error){
+                    document.getElementById("response").textContent = error;
+                })
+        }
+
+        document.getElementById("login").onclick = doLogin;
+    </script>
+</body>
+</html>

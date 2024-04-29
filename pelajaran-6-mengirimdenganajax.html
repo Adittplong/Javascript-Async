@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mengirim Data Ajax</title>
+</head>
+<body>
+    <form action="">
+        <label for="username">
+            username : 
+        <input type="text" name="username" id="username">
+        </label>
+        <br>
+        <label for="password">
+            Password :
+            <input type="text" name="password" id="password">
+        </label>
+        <br>
+        <input type="button" value="Login" id="login">
+    </form>
+    <script>
+        function dologin(){
+            const ajax = new XMLHttpRequest();
+            ajax.open("POST","https://testerserver1.free.beeceptor.com");
+            ajax.onload = function(){
+                console.info(ajax.responseText);
+             }
+            ajax.setRequestHeader("Content-Type","application/json");
+            ajax.send(JSON.stringify({
+                username : document.getElementById("username").value,
+                password : document.getElementById("password").value
+            }));
+        };
+
+        document.getElementById("login").onclick = dologin;
+    </script>
+</body>
+</html>

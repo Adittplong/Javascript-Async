@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File Dengan Ajax</title>
+</head>
+<body>
+    <form action="">
+        <label for="username">
+            username : 
+        <input type="text" name="username" id="username">
+        </label>
+        <br>
+        <label for="name">
+            Name :
+            <input type="text" name="name" id="name">
+        </label>
+        <br>
+        <label for="profile">
+            Profile :
+            <input type="file" name="profile" id="profile">
+        </label>
+        <br>
+        <input type="button" value="Send" id="send">
+    </form>
+
+    <h1 id="response"></h1>
+
+    <script>
+        function dofile(){
+            const ajax = new XMLHttpRequest();
+            ajax.open("POST","https://testerserver1.free.beeceptor.com");
+            ajax.onload = function(){
+                const response = document.getElementById("response");
+                response.innerText = ajax.responseText;
+            };  
+            
+            const form = new FormData();
+            form.append("username", document.getElementById("username").value);
+            form.append("name", document.getElementById("name").value);
+            
+            const files = document.getElementById("profile").files;
+            const firstFile = files.item(0);
+            form.append("profile", firstFile);
+            
+            ajax.send(form);
+        }
+
+        document.getElementById("send").onclick = dofile;
+    </script>
+</body>
+</html>

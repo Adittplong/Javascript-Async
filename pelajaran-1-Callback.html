@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CallBack</title>
+</head>
+<body>
+
+    <h1 id="head"></h1>
+    <script>
+        //set Time Out
+        const addElement = () => {
+            const header = document.createElement("h1");
+            header.textContent = "Muhammad Aditya Prayoga Suarman";
+
+            document.body.appendChild(header);
+        }
+
+        setTimeout(addElement,5000);
+
+        //set Interval
+        const setTime = () => {
+            const head = document.getElementById("head");
+            head.textContent = new Date().toString();
+        
+            document.body.appendChild(head);
+        }
+
+        setInterval(setTime, 1000);
+    </script>
+</body>
+</html>

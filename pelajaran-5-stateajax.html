@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Ajax</title>
+</head>
+<body>
+    <h1 id="response"></h1>
+    <script>
+        function displayResponse(json){
+            const header = document.getElementById("response");
+            header.textContent = json.response;
+        }
+
+        //Ajax
+        const ajax = new XMLHttpRequest();
+
+        //State Ajax
+        ajax.onreadystatechange = function (){
+            console.info(`Readt State Change : ${ajax.readyState}`);
+        }
+
+        //ajax.open('GET', 'api/hello.json');
+        ajax.open('GET', 'api/salah.json');
+        //ajax.open('GET','http://127.0.0.1:5500/pelajaran-2-ajax.html');
+        
+        //Menerima Data Ajax
+        ajax.addEventListener("load", function(){
+            //Response Status Ajax
+            if(ajax.status === 200){
+                //menerima data ajax
+                const json = JSON.parse(ajax.responseText);
+                displayResponse(json);
+            }else{
+                displayResponse({
+                    response : `Terjadi Kesalahan dengan status ${ajax.status}`
+                });
+            };
+        });
+
+        
+        ajax.send();
+
+
+    </script>
+</body>
+</html>
